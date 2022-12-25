@@ -5,13 +5,12 @@ const inquirer = require('inquirer');
 // Created an array of questions for user input
 const questions = [
     {
-        // object tree schem
-        // message: 'What is your name?',
-        // name: 'name',
-        // type: 'input'
+        name: 'title',
+        message: 'Enter a Title name for your project.',
+        type: 'input',
+
         //EXAMPLE I may use.
 //         var company;
-
 // while (true) {
 //     company = prompt("What the name of the company that developed the javascript language?", "");
 //     if (company === 'netscape') {
@@ -22,37 +21,77 @@ const questions = [
 // alert("correct answer!");
     },
     {
-        //choices example
-        // message: 'What languages do you know?',
-        // name: 'languages',
-        // type: 'checkbox',
-        // choices: ['Java', 'Javascript', 'Python', 'C++', 'C#', 'other']
-    },
-    {
+        name: 'description',
+        message: 'Enter a brief description about your project.',
+        type: 'input',
 
     },
     {
+        name: 'contents',
+        message: 'Would you like to use a table of contents?',
+        type: 'checkbox',
+        choices: ['Yes', 'No'],
 
     },
     {
+        name: 'installations',
+        message: 'Are there any installations needed for your project?',
+        type: 'checkbox',
+        choices: ['Yes', 'N'],
 
     },
     {
+        name: 'usage',
+        message: 'Enter a description on how to use your project.',
+        type: 'input',
 
     },
     {
+        name: 'contributions',
+        message: 'Will this project be open-source and allow contributions?',
+        type: 'checkbox',
+        choices: ['Yes', 'No'],
 
     },
     {
+        name: 'tests',
+        message: 'Are there any tests that can be run on your project?',
+        type: 'checkbox',
+        choices: ['Yes', 'No'],
 
     },
     {
+        name: 'Questions',
+        message: 'Would you like to provide a contact method to receive Questions about your project?',
+        type: 'checkbox',
+        choices: ['Yes', 'No'],
 
     },
     {
+        name: 'credits',
+        message: 'Are there any other developers involved in your project?',
+        type: 'checkbox',
+        choices: ['Yes', 'No'],
 
     },
     {
+        name: 'resources',
+        message: 'Are there any resources you would like to add to your project?',
+        type: 'checkbox',
+        choices: ['Yes', 'No'],
+
+    },
+    {
+        name: 'projectLocation', //what do i list this as???????????
+        message: 'Please provide a link to your project.',
+        type: 'input',
+
+    },
+    {
+        name: 'license',
+        message: 'Will you be adding a license to your project?',
+        type: 'checkbox',
+        choices: ['Yes', 'No'],
 
     },
 ];
