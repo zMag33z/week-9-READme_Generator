@@ -1,189 +1,270 @@
-// Included packages needed for this application
-const fs = require('fs');
+// Target utilities.
 const inquirer = require('inquirer');
+const fs = require('fs');
+const generateMarkdown = require('./utils/generateMarkdown');
 
-// Created an array of questions for user input
+// Dry up validate function.  
+// while no input given, question repeats, input 'must' be at least one character to return true value.
+const requireInput = input => {
+    while(input.length === 0){
+        if (input.length >= 1){
+            break;
+        }
+        console.log(`\n\x1b[41m Input Required \x1b[0m`);
+        return false;
+    }
+    return true;
+};  
+
+// Questions Array for prompt to cycle through.
+// Some messages will be skipped depending on confirm input values.
 const questions = [
+    // Provide input examples for best readme output.
     {
-        name: 'title',
-        message: 'Enter a Title name for your project.',
+        name: 'Title',
+        message: 'Enter a Title Name for your project.',
         type: 'input',
-
-        //EXAMPLE I may use.
-//         var company;
-// while (true) {
-//     company = prompt("What the name of the company that developed the javascript language?", "");
-//     if (company === 'netscape') {
-//         break;
-//     }
-//     alert("wrong answer");
-// }
-// alert("correct answer!");
-    },
+        validate: requireInput,
+    }
+    ,
     {
-        name: 'description',
-        message: 'Enter a brief description about your project.',
+        name: 'Description',
+        message: 'Enter a Welcoming Description about your project and why it was developed.',
         type: 'input',
-
-    },
+        validate: requireInput,
+    }
+    ,
     {
-        name: 'contents',
+        name: 'Contents',
         message: 'Would you like to use a table of contents?',
-        type: 'checkbox',
-        choices: ['Yes', 'No'],
-
-    },
+        type: 'confirm'
+    }
+    ,
     {
-        name: 'installations',
-        message: 'Are there any installations needed for your project?',
-        type: 'checkbox',
-        choices: ['Yes', 'N'],
-
-    },
+        name: 'queryInstallations',
+        message: 'Are there any Installations (dependancies) needed for your project?',
+        type: 'confirm'
+    }
+    ,
     {
-        name: 'usage',
-        message: 'Enter a description on how to use your project.',
+        name: 'Installations',
+     // when: the above prompt is true, prompt this message next. If not true, skip to next prompt.
+        when: previousPrompt => previousPrompt.queryInstallations === true,
+        message: 'Enter Installation/Dependancy name.',
         type: 'input',
-
-    },
+        validate: requireInput,
+    }
+    ,
     {
-        name: 'contributions',
+        name: 'addCode1',
+        when: previousPrompt => previousPrompt.queryInstallations === true,
+        message: 'Would you like to add a code highlight?',
+        type: 'confirm'
+    }
+    ,
+    {
+        name: 'howToInstall1',
+        when: previousPrompt => previousPrompt.queryInstallations === true,
+        message: 'If highlight selected it will appear below your provided installation description.  Describe how to install.',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
+    {
+        name: 'snippet1',
+        when: previousPrompt => previousPrompt.addCode1 === true,
+        message: 'Enter code to install dependancy.',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
+    {
+        name: 'additionalSnippet1',
+        when: previousPrompt => previousPrompt.addCode1 === true,
+        message: 'Do you need an additional code highlight?',
+        type: 'confirm',
+    }
+    ,
+    {
+        name: 'addingSnippet1',
+        when: previousPrompt => previousPrompt.additionalSnippet1 === true,
+        message: 'Enter more code.',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
+    // More Installations prompt--------------------------------------.
+    {
+        name: 'moreInstallations',
+        when: previousPrompt => previousPrompt.queryInstallations === true,
+        message: 'Are anymore Installations needed for your project?',
+        type: 'confirm',
+    }
+    ,
+    {
+        name: 'installations2',
+        when: previousPrompt => previousPrompt.moreInstallations === true,
+        message: 'Enter another Installation/Dependancy name.',
+        validate: requireInput,
+    }
+    ,
+    {
+        name: 'addCode2',
+        when: previousPrompt => previousPrompt.moreInstallations === true,
+        message: 'Would you like to add a code highlight?',
+        type: 'confirm'
+    }
+    ,
+    {
+        name: 'howToInstall2',
+        when: previousPrompt => previousPrompt.moreInstallations === true,
+        message: 'Describe how to install.',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
+    {
+        name: 'snippet2',
+        when: previousPrompt => previousPrompt.addCode2 === true,
+        message: 'Enter code to install dependancy.',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
+    {
+        name: 'additionalSnippet2',
+        when: previousPrompt => previousPrompt.addCode2 === true,
+        message: 'Do you need an additional code highlight?',
+        type: 'confirm',
+    }
+    ,
+    {
+        name: 'addingSnippet2',
+        when: previousPrompt => previousPrompt.additionalSnippet2 === true,
+        message: 'Enter more code.',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
+    {
+        name: 'Usage',
+        message: 'Enter a thorough description on how to USE your project.',
+        type: 'input',
+        validate: requireInput, 
+    }
+    ,
+    {
+        name: 'queryContributions',
         message: 'Will this project be open-source and allow contributions?',
-        type: 'checkbox',
-        choices: ['Yes', 'No'],
-
-    },
+        type: 'confirm'
+    }
+    ,
     {
-        name: 'tests',
+        name: 'Contributions',
+        when: previousPrompt => previousPrompt.queryContributions === true,
+        message: 'Enter description on how others can contribute to your project.',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
+    {
+        name: 'queryTests',
         message: 'Are there any tests that can be run on your project?',
-        type: 'checkbox',
-        choices: ['Yes', 'No'],
-
-    },
+        type: 'confirm'
+    }
+    ,
+    {
+        name: 'Tests',
+        when: previousPrompt => previousPrompt.queryTests === true,
+        message: 'What tests can be run and enter a brief descript of each.',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
+    {
+        name: 'queryQuestions',
+        message: 'Would you like to provide an email to receive Questions about your project?',
+        type: 'confirm'
+    }
+    ,
     {
         name: 'Questions',
-        message: 'Would you like to provide a contact method to receive Questions about your project?',
-        type: 'checkbox',
-        choices: ['Yes', 'No'],
-
-    },
+        when: previousPrompt => previousPrompt.queryQuestions === true,
+        message: 'Enter Email Address for questions about your project.',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
     {
-        name: 'credits',
+        name: 'queryCredits',
         message: 'Are there any other developers involved in your project?',
-        type: 'checkbox',
-        choices: ['Yes', 'No'],
-
-    },
+        type: 'confirm'
+    }
+    ,
     {
-        name: 'resources',
+        name: 'Credits',
+        when: previousPrompt => previousPrompt.queryCredits === true,
+        message: 'Enter each person who helped create your project.',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
+    {
+        name: 'queryResources',
         message: 'Are there any resources you would like to add to your project?',
-        type: 'checkbox',
-        choices: ['Yes', 'No'],
-
-    },
+        type: 'confirm'
+    }
+    ,
     {
-        name: 'projectLocation', //what do i list this as???????????
+        name: 'Resources',
+        when: previousPrompt => previousPrompt.queryResources === true,
+        message: 'Please enter your resources.',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
+    {
+        name: 'Location',
         message: 'Please provide a link to your project.',
         type: 'input',
-
-    },
+        validate: requireInput, 
+    }
+    ,
     {
-        name: 'license',
-        message: 'Will you be adding a license to your project?',
-        type: 'checkbox',
-        choices: ['Yes', 'No'],
+        name: 'License',
+        message: 'Choose a license or select NONE.',
+        type: 'list',
+        choices: ['NONE', 'MIT', 'Apache2.0', 'GPL v3.0'],
+    }
 
-    },
 ];
 
 // Created function to write README file
-function writeToFile(fileName, data) {
+function writeToFile(README) {
 
     //error example: err ? console.error(err) : console.log('Commit logged!')
 }
 
 // Created function to initialize app
 function init() {
-    //EXAMPLE
-    // inquirer
-    // .prompt(questions)
-    // .then((answers) => { //create answers.json file and stringify answers to file and if error write to file also return the error in console otherwise it was successful
-    //     fs.writeFile('answers.json', JSON.stringify(answers), (error) => {
-    //         return error 
-    //         ? console.error(error) 
-    //         : console.log('File written successfully');  
-    //     });
-    // });
+    inquirer
+    .prompt(questions)
+    .then((data) => {   //data = name: input value.
+        writeToFile('newREADME.md', generateMarkdown(data));
+    });
 }
 
-// Function called here to initialize app
+// Function call here to initialize app
 init();
 
+module.exports = questions;
 
-
-
-
-//invoke using node index.js
-
-//# 09 Node.js Challenge: Professional README Generator
-
-// ## Your Task
-// When creating an open source project on GitHub, 
-// it’s important to have a high-quality README for the app. 
-// This should include what the app is for, how to use the app, 
-// how to install it, how to report issues, and how to make contributions.
-
-// You can quickly and easily create a README file by using a 
-// command-line application to generate one. 
-// This allows the project creator to devote more time to working on 
-// the project.
-
-// Your task is to create a command-line application that dynamically
-// generates a professional README.md file from a user's input using the 
+// User will need to install inquirer package.
 // [Inquirer package](https://www.npmjs.com/package/inquirer/v/8.2.4). 
-// [Professional README Guide](https://coding-boot-camp.github.io/full-stack/github/professional-readme-guide) 
 
-
-
-// ## User Story
-
-// AS A developer
-// I WANT a README generator
-// SO THAT I can quickly create a professional README for a new project
-
-// ## Acceptance Criteria
-
-// GIVEN a command-line application that accepts user input
-// WHEN I am prompted for information about my application repository
-// THEN a high-quality, professional README.md is generated with
-// the title of my project 
-// and sections entitled
-// Description, 
-// Table of Contents,
-// Installation,
-// Usage,
-// License,
-// Contributing,
-// Tests,
-// and Questions
-
-// WHEN I enter my project title
-// THEN this is displayed as the title of the README
-
-// WHEN I enter a description, installation instructions, usage information, contribution guidelines, and test instructions
-// THEN this information is added to the sections of the README entitled Description, Installation, Usage, Contributing, and Tests
-
-// WHEN I choose a license for my application from a list of options
-// THEN a badge for that license is added near the top of the README and a notice is added to the section of the README entitled License that explains which license the application is covered under
-
-// WHEN I enter my GitHub username
-// THEN this is added to the section of the README entitled Questions, with a link to my GitHub profile
-
-// WHEN I enter my email address
-// THEN this is added to the section of the README entitled Questions, with instructions on how to reach me with additional questions
-
-// WHEN I click on the links in the Table of Contents
-// THEN I am taken to the corresponding section of the README
+//npm init -y
+//npm i inquirer@8.2.4
+//invoke using node index.js
 
 // Because this application won’t be deployed, you’ll also need to provide a link to a walkthrough video 
 // that demonstrates its functionality. 
