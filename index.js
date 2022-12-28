@@ -16,6 +16,8 @@ const requireInput = input => {
     return true;
 };  
 
+
+
 // Questions Array for prompt to cycle through.
 // Some messages will be skipped depending on confirm input values.
 const questions = [
@@ -86,61 +88,8 @@ const questions = [
     }
     ,
     {
-        name: 'addingSnippet1',
+        name: 'additionalSnippet1',
         when: previousPrompt => previousPrompt.additionalSnippet1 === true,
-        message: 'Enter more code.',
-        type: 'input',
-        validate: requireInput,
-    }
-    ,
-    // More Installations prompt--------------------------------------.
-    {
-        name: 'moreInstallations',
-        when: previousPrompt => previousPrompt.queryInstallations === true,
-        message: 'Are anymore Installations needed for your project?',
-        type: 'confirm',
-    }
-    ,
-    {
-        name: 'installations2',
-        when: previousPrompt => previousPrompt.moreInstallations === true,
-        message: 'Enter another Installation/Dependancy name.',
-        validate: requireInput,
-    }
-    ,
-    {
-        name: 'addCode2',
-        when: previousPrompt => previousPrompt.moreInstallations === true,
-        message: 'Would you like to add a code highlight?',
-        type: 'confirm'
-    }
-    ,
-    {
-        name: 'howToInstall2',
-        when: previousPrompt => previousPrompt.moreInstallations === true,
-        message: 'Describe how to install.',
-        type: 'input',
-        validate: requireInput,
-    }
-    ,
-    {
-        name: 'snippet2',
-        when: previousPrompt => previousPrompt.addCode2 === true,
-        message: 'Enter code to install dependancy.',
-        type: 'input',
-        validate: requireInput,
-    }
-    ,
-    {
-        name: 'additionalSnippet2',
-        when: previousPrompt => previousPrompt.addCode2 === true,
-        message: 'Do you need an additional code highlight?',
-        type: 'confirm',
-    }
-    ,
-    {
-        name: 'addingSnippet2',
-        when: previousPrompt => previousPrompt.additionalSnippet2 === true,
         message: 'Enter more code.',
         type: 'input',
         validate: requireInput,
@@ -236,13 +185,14 @@ const questions = [
         type: 'list',
         choices: ['NONE', 'MIT', 'Apache2.0', 'GPL v3.0'],
     }
-
 ];
 
 // Created function to write README file
-function writeToFile(README) {
+function writeToFile(README, data) {
+    fs.writeFile(README, data, (err) =>{
+        err ? console.error(err) : console.log('SUCCESS! README document generated.  You may now view your new file.')
+    });
 
-    //error example: err ? console.error(err) : console.log('Commit logged!')
 }
 
 // Created function to initialize app
@@ -257,7 +207,6 @@ function init() {
 // Function call here to initialize app
 init();
 
-module.exports = questions;
 
 // User will need to install inquirer package.
 // [Inquirer package](https://www.npmjs.com/package/inquirer/v/8.2.4). 
