@@ -101,6 +101,12 @@ const questions = [
         type: 'input',
         validate: requireInput, 
     }
+    // ADD SCREENSHOT -------------------------==================----------------------------------------
+    // like to add a screenshot?
+    // add a description of image
+    // add location to image file
+    // like to add style code to image?
+    // enter style code.
     ,
     {
         name: 'queryContributions',
@@ -183,7 +189,7 @@ const questions = [
         name: 'License',
         message: 'Choose a license or select NONE.',
         type: 'list',
-        choices: ['NONE', 'MIT', 'Apache2.0', 'GPL v3.0'],
+        choices: ['NONE', 'MIT', 'Apache2.0', 'GPLv3', 'BSD', 'Boost'],
     }
 ];
 
