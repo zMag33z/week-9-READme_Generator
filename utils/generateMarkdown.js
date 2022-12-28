@@ -44,7 +44,7 @@ return link;
 
 // Render license section.  Badge and link render sent out to the above functions.  Then returned to generateMarkdown function.
 function renderLicenseSection(data){
-  let section = `## License:\n![License: ${data.License}](${renderLicenseBadge(data)})\n\n[View License Here](${renderLicenseLink(data)})`;
+  let section = `## License:\n![License: ${data.License}](${renderLicenseBadge(data)})\n\n[View License Here](${renderLicenseLink(data)})\n`;
   return section;
   }
 
@@ -59,12 +59,12 @@ function generateMarkdown(data) {
   compiled.push(titleNdescription);
 
   // Tables of Contents.  As it cycles through, content sections are added if user selected yes for section.
-  let contents = `## Table of contents:\n\n`;
+  let contents = `### Table of contents:\n\n`;
 
   // Installation: mandatory
   if(data.queryInstallations === true){
-    let installations = `## Installation:\n${data.Installations}\n\n`;
-    let contentInstallations = `- [Installation](#installation)\n`;
+    let installations = `## Installations:\n${data.Installations}\n\n\n${data.howToInstall}\n\n`;
+    let contentInstallations = `- [Installations](#installations)\n`;
     compiled.push(installations);
     contents += contentInstallations;
   }
@@ -151,8 +151,11 @@ function generateMarkdown(data) {
   // down here so 'contents' updates throughout ifs. 
   // It is then spliced to contents array to index 1.  Title and Description are in index 0.
   if(data.Contents === true){
+    let backToTop = `\n### [Back to top](#)`;
+    compiled.push(backToTop);
     compiled.splice(1, 0, contents);
   }
+
   console.log(data);
    return compiled.join(''); // join lays everything inside compiled out as strings.
 }
