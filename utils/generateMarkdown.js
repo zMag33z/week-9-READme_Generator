@@ -1,5 +1,6 @@
 // File required by index.js.
-// Rendering license badge. Called from within generateMarkdown function. Returns value needed.
+
+// Rendering license badge.
 function renderLicenseBadge(data) {
   let badge;
 if(data.License === 'MIT'){
@@ -20,7 +21,7 @@ if(data.License === 'Boost'){
 return badge;
 }
 
-// Rendering license link. Called from within generateMarkdown function. Returns value needed.
+// Rendering license link.
 function renderLicenseLink(data) {
   let link;
 if(data.License === 'MIT'){
@@ -41,28 +42,56 @@ if(data.License === 'Boost'){
 return link;
 }
 
-// Generate Document with imported data.
-// Depending on if user wanted section.
+// Render license section.  Badge and link render sent out to the above functions.  Then returned to generateMarkdown function.
+function renderLicenseSection(data){
+  let section = `## License:\n![License: ${data.License}](${renderLicenseBadge(data)})\n\n[View License Here](${renderLicenseLink(data)})`;
+  return section;
+  }
+
+
+// Beginning generateMarkdown function.  Generate Document with imported data.
 function generateMarkdown(data) {
-  // variables: compiled is all sections without ifs, and if true, go inside the array. if false ignore
+  // compiled = only sections without ifs are mandatory, and if trues (user selected), go inside this array. if false ignore.
   let compiled =[];
-  let contents = `## Table of contents:\n\n`;
-   // no if: automatically add this section. 
+
+  // Title and Description: mandatory
   let titleNdescription = `# ${data.Title}\n\n## Description:\n${data.Description}\n\n`;
   compiled.push(titleNdescription);
 
+  // Tables of Contents.  As it cycles through, content sections are added if user selected yes for section.
+  let contents = `## Table of contents:\n\n`;
+
+  // Installation: mandatory
   if(data.queryInstallations === true){
-    let installations = `## Installations:\n${data.Installations}\n\n`; // work on installations snippet code and description
-    let contentInstallations = `- [Installations](#installations)\n`;
+    let installations = `## Installation:\n${data.Installations}\n\n`;
+    let contentInstallations = `- [Installation](#installation)\n`;
     compiled.push(installations);
     contents += contentInstallations;
   }
- // no if: automatically add this section. 
+  // Installation:
+  // codeBlock: if user selected code block.
+  if(data.addCode1 === true){
+    let tripleTicks = '```';
+    let code1 = tripleTicks + `shell\n${data.code1}\n` + tripleTicks + '\n\n';
+    compiled.push(code1);
+  }
+  // Installation:
+  // codeBlock: if user selected another code block.
+  if(data.addCode2 === true){
+    let tripleTicks = '```';
+    let code2 = tripleTicks + `shell\n${data.code2}\n` + tripleTicks + '\n\n';
+    compiled.push(code2);
+  }
+
+  // Usage: mandatory
   let usage = `## Usage:\n${data.Usage}\n\n`;
   let contentUsage = `- [Usage](#usage)\n`;
   compiled.push(usage);
   contents += contentUsage;
 
+  // Add file to usage?---------------------------------------------------------------
+
+  // Contributions: add?
   if(data.queryContributions === true){
     let contributions = `## Contributions:\n${data.Contributions}\n\n`;
     let contentContributions = `- [Contributions](#contributions)\n`;
@@ -70,6 +99,7 @@ function generateMarkdown(data) {
     contents += contentContributions;
   }
 
+  // Tests: add?
   if(data.queryTests === true){
     let tests = `## Tests:\n${data.Tests}\n\n`;
     let contentTests = `- [Tests](#tests)\n`;
@@ -77,6 +107,7 @@ function generateMarkdown(data) {
     contents += contentTests;
   }
 
+  // Questions: add?
   if(data.queryQuestions === true){
     let inquiries = `## Questions:\n${data.Questions}\n\n`;
     let contentQuestions = `- [Questions](#questions)\n`;
@@ -84,6 +115,7 @@ function generateMarkdown(data) {
     contents += contentQuestions;
   }
 
+  // Credits: add?
   if(data.queryCredits === true){
     let credits = `## Credits:\n${data.Credits}\n\n`;
     let contentCredits = `- [Credits](#credits)\n`;
@@ -91,33 +123,39 @@ function generateMarkdown(data) {
     contents += contentCredits;
   }
 
+  // Resources: add?
   if (data.queryResources === true){
     let resources = `## Resources:\n${data.Resources}\n\n`;
     let contentResources = `- [Resources](#resources)\n`;
     compiled.push(resources);
     contents += contentResources;
   }
- // no if: automatically add this section. 
+
+ // Location: mandatory 
   let location = `## Location:\n${data.Location}\n\n`;
   let contentLocation = `- [Location](#location)\n`;
   compiled.push(location);
   contents += contentLocation;
 
-  if(data.License != 'NONE'){ // At this point.  Render License Section function pointless. Omitted above, added here.
-    let license = `## License:\n![License: ${data.License}](${renderLicenseBadge(data)})\n\n[View License Here](${renderLicenseLink(data)})`
+  // License: add?
+  if(data.License != 'NONE'){
+    let license = renderLicenseSection(data);
     let contentLicense = `- [License](#license)\n\n`;
     compiled.push(license);
     contents += contentLicense;
   }else{
     contents += '\n';  // Space needed under Table if license not added.
   }
-  // Tables of Contents down here so 'contents' updates throughout ifs.  It is then spliced to contents array.
+
+  // Tables of Contents: add?
+  // down here so 'contents' updates throughout ifs. 
+  // It is then spliced to contents array to index 1.  Title and Description are in index 0.
   if(data.Contents === true){
     compiled.splice(1, 0, contents);
   }
-
-   return compiled.join('');
+  console.log(data);
+   return compiled.join(''); // join lays everything inside compiled out as strings.
 }
-// End of generateMarkdown function.  Pushes to writeToFile.
-
+// End of generateMarkdown function.
+// Return to writeToFile.
 module.exports = generateMarkdown;

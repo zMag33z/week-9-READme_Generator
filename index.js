@@ -60,20 +60,20 @@ const questions = [
     {
         name: 'addCode1',
         when: previousPrompt => previousPrompt.queryInstallations === true,
-        message: 'Would you like to add a code highlight?',
+        message: 'Would you like to add fenced code blocks? They will appear under the installation description.',
         type: 'confirm'
     }
     ,
     {
-        name: 'howToInstall1',
+        name: 'howToInstall',
         when: previousPrompt => previousPrompt.queryInstallations === true,
-        message: 'If highlight selected it will appear below your provided installation description.  Describe how to install.',
+        message: 'Describe step-by-step how to install this dependancy.',
         type: 'input',
         validate: requireInput,
     }
     ,
     {
-        name: 'snippet1',
+        name: 'code1',
         when: previousPrompt => previousPrompt.addCode1 === true,
         message: 'Enter code to install dependancy.',
         type: 'input',
@@ -81,16 +81,16 @@ const questions = [
     }
     ,
     {
-        name: 'additionalSnippet1',
+        name: 'addCode2',
         when: previousPrompt => previousPrompt.addCode1 === true,
-        message: 'Do you need an additional code highlight?',
+        message: 'Do you need an additional code block?',
         type: 'confirm',
     }
     ,
     {
-        name: 'additionalSnippet1',
-        when: previousPrompt => previousPrompt.additionalSnippet1 === true,
-        message: 'Enter more code.',
+        name: 'code2',
+        when: previousPrompt => previousPrompt.addCode2 === true,
+        message: 'Enter another code block.',
         type: 'input',
         validate: requireInput,
     }
@@ -196,7 +196,7 @@ const questions = [
 // Created function to write README file
 function writeToFile(README, data) {
     fs.writeFile(README, data, (err) =>{
-        err ? console.error(err) : console.log('SUCCESS! README document generated.  You may now view your new file.')
+        err ? console.error(err) : console.log('\n\x1b[32mSUCCESS!\x1b[0m\n    README document generated.\n    You may now view your new file.\n');
     });
 
 }
