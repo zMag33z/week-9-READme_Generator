@@ -1,50 +1,103 @@
 // File required by index.js.
 
+// Rendering Credits section.
+function renderCredits(data){
+  let togetherOrNo;
+// lol Couldn't think what to call it. Must be some debt to collect out there.
+  let creditors = `
+  ## Credits:
+  
+  _Project Creators:_
+
+  A quick shout out to those who helped bring this project together.
+
+  ${data.Credits}
+  \n`;
+
+  let contributors = `
+_Contributors:_
+
+Would also like to thank all contributors at this time.  All of the input is and was greatly appreciated and this project would not be as far as it is without it.
+
+Again.  Thank you.
+
+${data.Contributors}
+\n`;
+
+  //Checks the value of prompt input.
+  if(data.CreditsANDORContributors === 'Team Members'){
+    togetherOrNo = creditors;
+  }
+  if(data.CreditsANDORContributors === 'Contributors'){
+    togetherOrNo = contributors;
+  }
+  if(data.CreditsANDORContributors === 'BOTH'){
+    togetherOrNo = creditors + contributors;
+  }
+  return togetherOrNo;
+}
+
 // Rendering license badge.
 function renderLicenseBadge(data) {
   let badge;
-if(data.License === 'MIT'){
-  badge = `https://img.shields.io/badge/license-MIT-brightgreen`;
-}
-if(data.License === 'Apache2.0'){
-  badge = `https://img.shields.io/badge/license-Apache2.0-yellow`;
-}
-if(data.License === 'GPLv3'){
-  badge = `https://img.shields.io/badge/license-GPLv3-blue`;
-}
-if(data.License === 'BSD'){
-  badge = `https://img.shields.io/badge/license-BSD_3--Clause-orange`;
-}
-if(data.License === 'Boost'){
-  badge = `https://img.shields.io/badge/license-Boost_1.0-lightblue`;
-}
+
+  //checks the value of prompt input.
+  if(data.License === 'Unlicensed'){
+    badge = `https://img.shields.io/badge/license-unlicensed-lightgrey`;
+  }
+  if(data.License === 'MIT'){
+    badge = `https://img.shields.io/badge/license-MIT-brightgreen`;
+  }
+  if(data.License === 'Apache2.0'){
+    badge = `https://img.shields.io/badge/license-Apache2.0-yellow`;
+  }
+  if(data.License === 'GPLv3'){
+    badge = `https://img.shields.io/badge/license-GPLv3-blue`;
+  }
+  if(data.License === 'BSD'){
+    badge = `https://img.shields.io/badge/license-BSD_3--Clause-orange`;
+  }
+  if(data.License === 'Boost'){
+    badge = `https://img.shields.io/badge/license-Boost_1.0-lightblue`;
+  }
 return badge;
 }
 
-// Rendering license link.
+// Rendering license link.  Only general license links added.  I prefer a link to the one in my REPO. ---====
 function renderLicenseLink(data) {
   let link;
-if(data.License === 'MIT'){
-  link = `https://opensource.org/licenses/MIT`;
-}
-if(data.License === 'Apache2.0'){
-  link = `https://www.apache.org/licenses/LICENSE-2.0`;
-}
-if(data.License === 'GPLv3'){
-  link = `https://www.gnu.org/licenses/gpl-3.0.en.html`;
-}
-if(data.License === 'BSD'){
-  link = `https://opensource.org/licenses/BSD-3-Clause`;
-}
-if(data.License === 'Boost'){
-  link = `https://www.boost.org/LICENSE_1_0.txt`;
-}
+
+  //checks value of prompt input
+  if(data.License === 'Unlicensed'){
+    link = `https://opensource.org/licenses/unlicense`;
+  }
+  if(data.License === 'MIT'){
+    link = `https://opensource.org/licenses/MIT`;
+  }
+  if(data.License === 'Apache2.0'){
+    link = `https://www.apache.org/licenses/LICENSE-2.0`;
+  }
+  if(data.License === 'GPLv3'){
+    link = `https://www.gnu.org/licenses/gpl-3.0.en.html`;
+  }
+  if(data.License === 'BSD'){
+    link = `https://opensource.org/licenses/BSD-3-Clause`;
+  }
+  if(data.License === 'Boost'){
+    link = `https://www.boost.org/LICENSE_1_0.txt`;
+  }
 return link;
 }
 
 // Render license section.  Badge and link render sent out to the above functions.  Then returned to generateMarkdown function.
 function renderLicenseSection(data){
-  let section = `## License:\n![License: ${data.License}](${renderLicenseBadge(data)})\n\n[View License Here](${renderLicenseLink(data)})\n`;
+  let section = `
+## License:
+
+![License: ${data.License}](${renderLicenseBadge(data)})
+
+See Terms & Conditions of the license [HERE.](${renderLicenseLink(data)})
+`;
   return section;
   }
 
@@ -54,14 +107,22 @@ function generateMarkdown(data) {
   // compiled = only sections without ifs are mandatory, and if trues (user selected), go inside this array. if false ignore.
   let compiled =[];
 
-  // Title and Description: mandatory
-  let titleNdescription = `# ${data.Title}\n\n## Description:\n${data.Description}\n\n`;
+  // Title and Description: mandatory    OOOOYYYYY BITCH    DON"T FORGET TO REMOVE OOPS   ${data.Title}\n\n-------------------------------------------------------------===================
+  let titleNdescription = `# **OOPS! Looks like I'm under construction**\n\n## Description:\n${data.Description}\n\n`;
   compiled.push(titleNdescription);
 
   // Tables of Contents.  As it cycles through, content sections are added if user selected yes for section.
   let contents = `### Table of contents:\n\n`;
 
-  // Installation: mandatory
+  // Getting Started: Yes
+  if(data.queryGettingStarted === true){
+    let startUpSection = `## Getting Started:\n${data.gettingStarted}\n\n`;
+    let contentStartUpSection = `- [Getting Started](#getting)\n`
+    compiled.push(startUpSection);
+    contents += contentStartUpSection;
+  }
+
+  // Installation: Yes
   if(data.queryInstallations === true){
     let installations = `## Installations:\n${data.Installations}\n\n\n${data.howToInstall}\n\n`;
     let contentInstallations = `- [Installations](#installations)\n`;
@@ -89,11 +150,21 @@ function generateMarkdown(data) {
   compiled.push(usage);
   contents += contentUsage;
 
-  // Add file to usage?---------------------------------------------------------------
+  //Usage. Add file.  User syntax
+  if(data.whichSyntaxFile === 'Apply personal syntax to file.'){
+    let personalFile = `${data.userSyntaxFile}\n\n`;
+    compiled.push(personalFile);
+  }
+
+  //Usage.  Add file.
+  if(data.whichSyntaxFile === 'Use generator for auto syntax.'){
+    let autoFile = `![${data.descriptionOfFile}](${data.locationOfFile})\n\n`;
+    compiled.push(autoFile);
+  }
 
   // Contributions: add?
   if(data.queryContributions === true){
-    let contributions = `## Contributions:\n${data.Contributions}\n\n`;
+    let contributions = `## Contributions:\nWould also like to thank all contributors at this time.  All of the input is greatly appreciated and this project would not be as far as it would without it.  Again\n${data.Contributions}\n\n`;
     let contentContributions = `- [Contributions](#contributions)\n`;
     compiled.push(contributions);
     contents += contentContributions;
@@ -109,7 +180,7 @@ function generateMarkdown(data) {
 
   // Questions: add?
   if(data.queryQuestions === true){
-    let inquiries = `## Questions:\n${data.Questions}\n\n`;
+    let inquiries = `## Questions:\n\nFor any questions or additional feedback, please send an email.\n\n_Contact Information:_\n\nEmail:  ${data.questionsEmail}\n\n`;
     let contentQuestions = `- [Questions](#questions)\n`;
     compiled.push(inquiries);
     contents += contentQuestions;
@@ -117,35 +188,31 @@ function generateMarkdown(data) {
 
   // Credits: add?
   if(data.queryCredits === true){
-    let credits = `## Credits:\n${data.Credits}\n\n`;
+    let credits = renderCredits(data);
     let contentCredits = `- [Credits](#credits)\n`;
     compiled.push(credits);
     contents += contentCredits;
   }
 
   // Resources: add?
-  if (data.queryResources === true){
+  if (data.queryResources === true){                        //
     let resources = `## Resources:\n${data.Resources}\n\n`;
     let contentResources = `- [Resources](#resources)\n`;
     compiled.push(resources);
     contents += contentResources;
   }
 
- // Location: mandatory 
-  let location = `## Location:\n${data.Location}\n\n`;
+  // Location: mandatory 
+  let location = `## Location:\n[${data.Title}](${data.Location})\n\n`;
   let contentLocation = `- [Location](#location)\n`;
   compiled.push(location);
   contents += contentLocation;
 
   // License: add?
-  if(data.License != 'NONE'){
-    let license = renderLicenseSection(data);
-    let contentLicense = `- [License](#license)\n\n`;
-    compiled.push(license);
-    contents += contentLicense;
-  }else{
-    contents += '\n';  // Space needed under Table if license not added.
-  }
+  let license = renderLicenseSection(data);
+  let contentLicense = `- [License](#license)\n\n`;
+  compiled.push(license);
+  contents += contentLicense;
 
   // Tables of Contents: add?
   // down here so 'contents' updates throughout ifs. 
@@ -156,9 +223,10 @@ function generateMarkdown(data) {
     compiled.splice(1, 0, contents);
   }
 
-  console.log(data);
+  console.log(data); //REMOVE THIS LOG WHEN FINISHED---------------------------------------------------------====
    return compiled.join(''); // join lays everything inside compiled out as strings.
 }
+
 // End of generateMarkdown function.
 // Return to writeToFile.
 module.exports = generateMarkdown;
