@@ -1,7 +1,7 @@
 # **OOPS! Looks like I'm under construction**
 
 ## Description:
-testing testing
+Welcome to my markdown file generator. One can quickly and easily create a README file by using the command line. This application interface, dependant upon user input, will create Professional README documentation. This will allow a developer more time to working on a project.
 
 ### Table of contents:
 
@@ -17,41 +17,42 @@ testing testing
 - [License](#license)
 
 ## Getting Started:
-testing testingtesting testingtesting testingtesting testingtesting testing
+![npm version](https://badge.fury.io/js/node.svg)<br>First to get started you will need to have downloaded Node.js.  If you haven't, you may go here. [_Node.js downloads_](https://nodejs.org/en/download/)
 
 ## Installations:
-testing testing
+![npm version](https://badge.fury.io/js/inquirer.svg)<br>inquirer [_for more information_](https://www.npmjs.com/package/inquirer)
 
 
-testing testingtesting testingtesting testingtesting testingtesting testingtesting testingtesting testingtesting testingtesting testingtesting testing
+First, travel to the directory folder containing the index.js file and open in VSCode.  Second, right click on the index.js file, select 'Open in Integrated Terminal'.  Third, once the terminal opens, on the command line type the first provided code example.  Fourth, on the command line type the second provided code example.  Now you'll noticed a folder name node_modules has appeared.  These are the packets needed to run inquirer.
 
+_Example 1:_
 ```shell
-testing testing
+npm init -y
 ```
 
+_Example 2:_
 ```shell
-testing testing
+npm i inquirer@8.2.4
 ```
 
 ## Usage:
-testing testingtesting testingtesting testingtesting testingtesting testingtesting testingtesting testing
+Once the above installations are complete, to initalize application, on the command line type: node.js index.js.  You'll be guided through a series of prompts that will generate a README file containing most sections you would like to add to your file.  At the beginning there is also a helpful hint to remind you the language syntax a markdown file uses and how it can be useful to use with your input.
 
-![this repo before](./imgs/testimgreadme.png)
+![y's in field of sections](./imgs/testimgreadme.png)
 
 ## Contributions:
-Would also like to thank all contributors at this time.  All of the input is greatly appreciated and this project would not be as far as it would without it.  Again
-testing testingtesting testingtesting testingtesting testingtesting testingtesting testingtesting testingtesting testingtesting testing
+You may fork for personal use only at this time.
 
 ## Tests:
-testing testingtesting testingtesting testingtesting testingtesting testingtesting testing
+Run function from validate of answer input to open new prompt and have multiple inputs.  A good example would be images.  How many? Enter Description. Enter Location.  One prompt run mutiple times for different input.
 
 ## Questions:
 
-For any questions or additional feedback, please send an email.
+For any questions or additional feedback.
 
 _Contact Information:_
 
-Email:  [testing testing](https://github.com/zMag33z/week-9-READme_Generator)
+Email:&nbsp;&nbsp;[zMaG33z](mag33.cdh@gmail.com)
 
 
   ## Credits:
@@ -60,28 +61,19 @@ Email:  [testing testing](https://github.com/zMag33z/week-9-READme_Generator)
 
   A quick shout out to those who helped bring this project together.
 
-  One can quickly One can quickly One can quickly One can quickly One can quickly One can quickly 
+  No acknowledgements at this time.  Just a running to show the section.
   
-
-_Contributors:_
-
-Would also like to thank all contributors at this time.  All of the input is and was greatly appreciated and this project would not be as far as it is without it.
-
-Again.  Thank you.
-
-One can quickly One can quickly One can quickly One can quickly One can quickly One can quickly One can quickly One can quickly One can quickly 
-
 ## Resources:
-[school for beginning code](bootcamp.com)
+All resources found through [Google](https://www.google.com).
 
 ## Location:
-[testing testing]([README Generator](https://github.com/zMag33z/week-9-READme_Generator))
+[ README file Generator using Node.js with inquirer](https://github.com/zMag33z/week-9-READme_Generator)
 
 
 ## License:
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen)
 
-See Terms & Conditions of the license [HERE.](https://opensource.org/licenses/MIT)
+See _Terms & Conditions_ of the license [**HERE**.](https://opensource.org/licenses/MIT)
 
 ### [Back to top](#)

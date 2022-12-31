@@ -2,6 +2,10 @@
 
 // Rendering Credits section.
 function renderCredits(data){
+  let trythis = data.Credits.split(';');
+
+  console.log(trythis);
+
   let togetherOrNo;
 // lol Couldn't think what to call it. Must be some debt to collect out there.
   let creditors = `
@@ -14,12 +18,18 @@ function renderCredits(data){
   ${data.Credits}
   \n`;
 
+  let addContributesFile = `
+  _Contributors:_
+
+  [View Contributors Here](${data.addContributorsFile})
+  \n`;
+
   let contributors = `
 _Contributors:_
 
-Would also like to thank all contributors at this time.  All of the input is and was greatly appreciated and this project would not be as far as it is without it.
+Would also like to thank all contributors at this time.&nbsp;&nbsp;All of the input is and was greatly appreciated and this project would not be as far as it is without it.
 
-Again.  Thank you.
+&nbsp;&nbsp;Again.  Thank you.
 
 ${data.Contributors}
 \n`;
@@ -28,12 +38,19 @@ ${data.Contributors}
   if(data.CreditsANDORContributors === 'Team Members'){
     togetherOrNo = creditors;
   }
+  if(data.contributorAddFile === 'Add File'){
+    togetherOrNo = addContributesFile;
+  }
   if(data.CreditsANDORContributors === 'Contributors'){
     togetherOrNo = contributors;
   }
-  if(data.CreditsANDORContributors === 'BOTH'){
+  if(data.CreditsANDORContributors === 'BOTH' && data.contributorAddFile === 'Input Each'){
     togetherOrNo = creditors + contributors;
   }
+  if(data.CreditsANDORContributors === 'BOTH' && data.contributorAddFile === 'Add File'){
+    togetherOrNo = creditors + addContributesFile;
+  }
+
   return togetherOrNo;
 }
 
@@ -96,7 +113,7 @@ function renderLicenseSection(data){
 
 ![License: ${data.License}](${renderLicenseBadge(data)})
 
-See Terms & Conditions of the license [HERE.](${renderLicenseLink(data)})
+See _Terms & Conditions_ of the license [**HERE**.](${renderLicenseLink(data)})
 `;
   return section;
   }
@@ -132,15 +149,17 @@ function generateMarkdown(data) {
   // Installation:
   // codeBlock: if user selected code block.
   if(data.addCode1 === true){
+    let example1 = '_Example 1:_\n'
     let tripleTicks = '```';
-    let code1 = tripleTicks + `shell\n${data.code1}\n` + tripleTicks + '\n\n';
+    let code1 = example1 + tripleTicks + `shell\n${data.code1}\n` + tripleTicks + '\n\n';
     compiled.push(code1);
   }
   // Installation:
   // codeBlock: if user selected another code block.
   if(data.addCode2 === true){
+    let example2 = '_Example 2:_\n'
     let tripleTicks = '```';
-    let code2 = tripleTicks + `shell\n${data.code2}\n` + tripleTicks + '\n\n';
+    let code2 = example2 + tripleTicks + `shell\n${data.code2}\n` + tripleTicks + '\n\n';
     compiled.push(code2);
   }
 
@@ -164,7 +183,7 @@ function generateMarkdown(data) {
 
   // Contributions: add?
   if(data.queryContributions === true){
-    let contributions = `## Contributions:\nWould also like to thank all contributors at this time.  All of the input is greatly appreciated and this project would not be as far as it would without it.  Again\n${data.Contributions}\n\n`;
+    let contributions = `## Contributions:\n${data.Contributions}\n\n`;
     let contentContributions = `- [Contributions](#contributions)\n`;
     compiled.push(contributions);
     contents += contentContributions;
@@ -180,7 +199,7 @@ function generateMarkdown(data) {
 
   // Questions: add?
   if(data.queryQuestions === true){
-    let inquiries = `## Questions:\n\nFor any questions or additional feedback, please send an email.\n\n_Contact Information:_\n\nEmail:  ${data.questionsEmail}\n\n`;
+    let inquiries = `## Questions:\n\nFor any questions or additional feedback.\n\n_Contact Information:_\n\nEmail:&nbsp;&nbsp;[${data.UserName}](${data.questionsEmail})\n\n`;
     let contentQuestions = `- [Questions](#questions)\n`;
     compiled.push(inquiries);
     contents += contentQuestions;
@@ -223,7 +242,6 @@ function generateMarkdown(data) {
     compiled.splice(1, 0, contents);
   }
 
-  console.log(data); //REMOVE THIS LOG WHEN FINISHED---------------------------------------------------------====
    return compiled.join(''); // join lays everything inside compiled out as strings.
 }
 

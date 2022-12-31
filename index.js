@@ -127,6 +127,7 @@ const questions = [
     ,
     {   //Usage. Add file. Personal or Auto.
         name: 'whichSyntaxFile',
+        when: previousPrompt => previousPrompt.queryAddFile === true,
         message: 'Select Option for add file:',
         type: 'list',
         choices: ['Apply personal syntax to file.','Use generator for auto syntax.'],
@@ -191,6 +192,14 @@ const questions = [
     }
     ,
     {   //Questions.  Yes
+        name: 'UserName',
+        when: previousPrompt => previousPrompt.queryQuestions === true,
+        message: 'Enter your name/nickname.\n',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
+    {   //Questions.  Yes
         name: 'questionsEmail',
         when: previousPrompt => previousPrompt.queryQuestions === true,
         message: 'Enter Email Address for questions about your project.\n',
@@ -206,6 +215,7 @@ const questions = [
     ,
     {   //Credits.  Asks which or BOTH
         name: 'CreditsANDORContributors',
+        when: previousPrompt => previousPrompt.queryCredits === true,
         message: 'Choose acknowledgment type below.',
         type: 'list',
         choices: ['Team Members', 'Contributors', 'BOTH'],
@@ -219,9 +229,24 @@ const questions = [
         validate: requireInput,
     }
     ,
-    {   //Credits.  Contributors
-        name: 'Contributors',
+    {   //Credits.  Contributors.  Add File or Input Each.
+        name: 'contributorAddFile',
         when: previousPrompt => previousPrompt.CreditsANDORContributors === 'Contributors' || previousPrompt.CreditsANDORContributors === 'BOTH',
+        message: 'Add Contributor file or input each individually?',
+        type: 'list',
+        choices: ['Add File', 'Input Each'],
+    }
+    ,
+    {   //Credits. Contributors. Add File
+        name: 'addContributorsFile',
+        when: previousPrompt => previousPrompt.contributorAddFile === 'Add File',
+        message: 'Enter file location.\n',
+        validate: requireInput,
+    }
+    ,
+    {   //Credits.  Contributors.  Input Each.
+        name: 'Contributors',
+        when: previousPrompt => previousPrompt.contributorAddFile === 'Input Each',
         message: 'Enter the names of those who supported this project in any way.\n',
         type: 'input',
         validate: requireInput,
@@ -250,7 +275,7 @@ const questions = [
     ,
     {   //License.  When 'none' selected. it does go into the questions array but... it's ignored.
         name: 'License',
-        message: 'Choose a license or select "NONE".',
+        message: 'Choose a license.',
         type: 'list',
         choices: ['Unlicensed', 'MIT', 'Apache2.0', 'GPLv3', 'BSD', 'Boost'],
     }
