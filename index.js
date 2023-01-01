@@ -14,13 +14,14 @@ const generateMarkdown = require('./utils/generateMarkdown');
 
 // Dry up validate function.  
 // while no input given, personal alert then question repeats, input 'must' be at least one character to return true.
-const requireInput = input => {
+const requireInput = (input) => {
     while(input.length === 0){
         console.log(`\n\x1b[41m\x1b[30m Input Required \x1b[0m\x1b[0m\n`);
         return false;
     }
     return true;
 };  
+
 
 // Questions Array for prompt to cycle through.
 // Some messages will be skipped depending on confirm input values.
@@ -92,7 +93,7 @@ const questions = [
     {   //Installations. Fenced code block 1.  Yes
         name: 'code1',
         when: previousPrompt => previousPrompt.addCode1 === true,
-        message: 'Enter code to install dependancy.\n',
+        message: 'Enter first block of code.\n',
         type: 'input',
         validate: requireInput,
     }
@@ -107,7 +108,7 @@ const questions = [
     {   //Installations.  Fenced code block 2.  Yes
         name: 'code2',
         when: previousPrompt => previousPrompt.addCode2 === true,
-        message: 'Enter another code block.\n',
+        message: 'Enter second block of code.\n',
         type: 'input',
         validate: requireInput,
     }
@@ -297,7 +298,7 @@ function init() {
     inquirer
     .prompt(questions)
     .then((data) => {   //data = name: input value.
-        writeToFile('README.md', generateMarkdown(data));   //Change name after video.
+        writeToFile('kate.md', generateMarkdown(data));   //Change name after video.
     });
 }
 

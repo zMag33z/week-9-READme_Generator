@@ -3,15 +3,16 @@
 // Rendering Credits section.
 function renderCredits(data){
   let trythis = data.Credits.split(';');
-
   console.log(trythis);
+  console.log(trythis[0]);
+
 
   let togetherOrNo;
 // lol Couldn't think what to call it. Must be some debt to collect out there.
   let creditors = `
   ## Credits:
   
-  _Project Creators:_
+  *Project Creators:*
 
   A quick shout out to those who helped bring this project together.
 
@@ -19,13 +20,13 @@ function renderCredits(data){
   \n`;
 
   let addContributesFile = `
-  _Contributors:_
+  *Contributors:*
 
   [View Contributors Here](${data.addContributorsFile})
   \n`;
 
   let contributors = `
-_Contributors:_
+*Contributors:*
 
 Would also like to thank all contributors at this time.&nbsp;&nbsp;All of the input is and was greatly appreciated and this project would not be as far as it is without it.
 
@@ -113,7 +114,7 @@ function renderLicenseSection(data){
 
 ![License: ${data.License}](${renderLicenseBadge(data)})
 
-See _Terms & Conditions_ of the license [**HERE**.](${renderLicenseLink(data)})
+See *Terms & Conditions* of the license [***HERE***.](${renderLicenseLink(data)})
 `;
   return section;
   }
@@ -124,12 +125,12 @@ function generateMarkdown(data) {
   // compiled = only sections without ifs are mandatory, and if trues (user selected), go inside this array. if false ignore.
   let compiled =[];
 
-  // Title and Description: mandatory    OOOOYYYYY BITCH    DON"T FORGET TO REMOVE OOPS   ${data.Title}\n\n-------------------------------------------------------------===================
-  let titleNdescription = `# **OOPS! Looks like I'm under construction**\n\n## Description:\n${data.Description}\n\n`;
+  // Title and Description: mandatory    
+  let titleNdescription = `# **${data.Title}**\n\n\n## ${data.Description}\n\n`;
   compiled.push(titleNdescription);
 
   // Tables of Contents.  As it cycles through, content sections are added if user selected yes for section.
-  let contents = `### Table of contents:\n\n`;
+  let contents = `### **Table of contents:**\n\n`;
 
   // Getting Started: Yes
   if(data.queryGettingStarted === true){
@@ -149,7 +150,7 @@ function generateMarkdown(data) {
   // Installation:
   // codeBlock: if user selected code block.
   if(data.addCode1 === true){
-    let example1 = '_Example 1:_\n'
+    let example1 = '*Example 1:*\n'
     let tripleTicks = '```';
     let code1 = example1 + tripleTicks + `shell\n${data.code1}\n` + tripleTicks + '\n\n';
     compiled.push(code1);
@@ -157,7 +158,7 @@ function generateMarkdown(data) {
   // Installation:
   // codeBlock: if user selected another code block.
   if(data.addCode2 === true){
-    let example2 = '_Example 2:_\n'
+    let example2 = '*Example 2:*\n'
     let tripleTicks = '```';
     let code2 = example2 + tripleTicks + `shell\n${data.code2}\n` + tripleTicks + '\n\n';
     compiled.push(code2);
@@ -199,7 +200,7 @@ function generateMarkdown(data) {
 
   // Questions: add?
   if(data.queryQuestions === true){
-    let inquiries = `## Questions:\n\nFor any questions or additional feedback.\n\n_Contact Information:_\n\nEmail:&nbsp;&nbsp;[${data.UserName}](${data.questionsEmail})\n\n`;
+    let inquiries = `## Questions:\n\nFor any questions or additional feedback.\n\n*Contact Information:*\n\nEmail:&nbsp;&nbsp;[${data.UserName}](${data.questionsEmail})\n\n`;
     let contentQuestions = `- [Questions](#questions)\n`;
     compiled.push(inquiries);
     contents += contentQuestions;
