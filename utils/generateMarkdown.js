@@ -12,7 +12,7 @@ function renderCredits(data){
   let creditors = `
   ## Credits:
   
-  *Project Creators:*
+  **_Project Creators:_**
 
   A quick shout out to those who helped bring this project together.
 
@@ -20,13 +20,13 @@ function renderCredits(data){
   \n`;
 
   let addContributesFile = `
-  *Contributors:*
+  **_Contributors:_**
 
   [View Contributors Here](${data.addContributorsFile})
   \n`;
 
   let contributors = `
-*Contributors:*
+**_Contributors:_**
 
 Would also like to thank all contributors at this time.&nbsp;&nbsp;All of the input is and was greatly appreciated and this project would not be as far as it is without it.
 
@@ -114,7 +114,7 @@ function renderLicenseSection(data){
 
 ![License: ${data.License}](${renderLicenseBadge(data)})
 
-See *Terms & Conditions* of the license [***HERE***.](${renderLicenseLink(data)})
+See *Terms & Conditions* of the license [**_HERE_**.](${renderLicenseLink(data)})
 `;
   return section;
   }
@@ -126,7 +126,7 @@ function generateMarkdown(data) {
   let compiled =[];
 
   // Title and Description: mandatory    
-  let titleNdescription = `# **${data.Title}**\n\n\n## ${data.Description}\n\n`;
+  let titleNdescription = `# **${data.Title}**\n\n\n### ${data.Description}\n\n`;
   compiled.push(titleNdescription);
 
   // Tables of Contents.  As it cycles through, content sections are added if user selected yes for section.
@@ -200,7 +200,7 @@ function generateMarkdown(data) {
 
   // Questions: add?
   if(data.queryQuestions === true){
-    let inquiries = `## Questions:\n\nFor any questions or additional feedback.\n\n*Contact Information:*\n\nEmail:&nbsp;&nbsp;[${data.UserName}](${data.questionsEmail})\n\n`;
+    let inquiries = `## Questions:\n\nFor any questions or additional feedback.\n\n**_Contact Information:_**\n\nEmail:&nbsp;&nbsp;[${data.UserName}](${data.questionsEmail})\n\n`;
     let contentQuestions = `- [Questions](#questions)\n`;
     compiled.push(inquiries);
     contents += contentQuestions;
