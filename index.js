@@ -1,11 +1,11 @@
-// Sorry for the mess.  But I had fun!             
+// Sorry for the mess.  But I had fun!             And then wish I would've found reactive interface sooner.  Should implement to reduce questions array.
 
 // Welcome
 console.log(`\n\x1b[100m\x1b[34mWelcome to yet another README file generator.\x1b[0m\x1b[0m
-    Application output is given in literal form. ie: back ticks
     Don't forget this is a markdown file.
     Meaning it'll recognize input using markup(html) language.
-    May be useful to use with your input.\n`);
+    May be useful to use with your input.
+    Especially double spaces. &nbsp;&nbsp;\n`);
 
 // Target utilities.
 const inquirer = require('inquirer');
@@ -32,6 +32,7 @@ const questions = [
         message: 'Enter a Title Name for your project.\n',
         type: 'input',
         validate: requireInput,
+        filter: input => input.trim(),
     }
     ,
     {   //Title Description
@@ -68,7 +69,7 @@ const questions = [
     ,
     {   //Installations.  Dependancy name.             This section bothers me but I'm leaving it as it for the moment.
         name: 'Installations',
-     // when: the above prompt is true, prompt this message next. If not true, skip to next prompt.
+     // when: the above prompt is value, prompt this message. If no true value, skip to next prompt.
         when: previousPrompt => previousPrompt.queryInstallations === true,
         message: 'Enter Installation/Dependancy name.\n',
         type: 'input',
@@ -126,10 +127,10 @@ const questions = [
         type: 'confirm'
     }
     ,
-    {   //Usage. Add file. Personal or Auto.
+    {   //Usage. Add file. Personal or Auto.                                            Implement a way to add more than one file.
         name: 'whichSyntaxFile',
         when: previousPrompt => previousPrompt.queryAddFile === true,
-        message: 'Select Option for add file:',
+        message: 'Select Option for add an image file:',
         type: 'list',
         choices: ['Apply personal syntax to file.','Use generator for auto syntax.'],
     }
@@ -137,12 +138,12 @@ const questions = [
     {   //Usage. Add file. Personal.
         name: 'userSyntaxFile',
         when: previousPrompt => previousPrompt.whichSyntaxFile === 'Apply personal syntax to file.',
-        message: 'Enter personal syntax for file.\n',
+        message: 'Enter personal syntax for file.  Syntax line breaks and spaces where needed.\n',
         type: 'input',
         validate: requireInput,
     }
     ,
-    {   //Usage. Add file. Auto.  Description
+    {   //Usage. Add file. Auto.  Description                                       Find a way to repeat these two next questions consecutively. example: Enter file location 1. Enter description 1 ; Enter file location 2. Enter description 2.  ETC.
         name: 'descriptionOfFile',
         when: previousPrompt => previousPrompt.whichSyntaxFile === 'Use generator for auto syntax.',
         message: 'Enter a short description of the file.\n',
@@ -154,6 +155,21 @@ const questions = [
         name:'locationOfFile',
         when: previousPrompt => previousPrompt.whichSyntaxFile === 'Use generator for auto syntax.',
         message: 'Enter the link to the file.\n',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
+    {   //Usage. Add file. Auto. Label bottom Yes or No
+        name: 'queryAddLabel',
+        when: previousPrompt => previousPrompt.whichSyntaxFile === 'Use generator for auto syntax.', 
+        message: 'Would you like to the label the bottom of the file?\n',
+        type: 'confirm'
+    }
+    ,
+    {   //Usage. Add file. Auto. Label bottom
+        name: 'AddLabel',
+        when: previousPrompt => previousPrompt.queryAddLabel === true,
+        message: 'Enter label now.\n',
         type: 'input',
         validate: requireInput,
     }
@@ -178,7 +194,7 @@ const questions = [
         type: 'confirm'
     }
     ,
-    {   //Tests.  Yes
+    {   //Tests.  Yes                       Separate input if using numbers beginning 1. 2. 3. into an array.  Add . and line break to end of each. If beginning not number dot notation ignore.
         name: 'Tests',
         when: previousPrompt => previousPrompt.queryTests === true,
         message: 'What tests can be run?  Enter a brief description of each.\n',
@@ -186,7 +202,7 @@ const questions = [
         validate: requireInput,
     }
     ,
-    {   //Questions.  Yes or No
+    {   //Questions.  Yes or No                     Add more contact methods.  Turn into array and place in desired output location.
         name: 'queryQuestions',
         message: 'Would you like to provide an email to receive Questions about your project?\n',
         type: 'confirm'
@@ -207,8 +223,8 @@ const questions = [
         type: 'input',
         validate: requireInput,
     }
-    ,
-    {   //Credits.  Yes or No
+    ,                                       // ATM separte by making array using semicolon.  Then separate out each person and link to separate arrays.  function array indeces at the same time inside arrays value is [person] &+ (link)
+    {   //Credits.  Yes or No                                       Find a way to separate name from social link to create a clickable link of name.
         name: 'queryCredits',
         message: 'Are there any other persons to acknowledge for this project?\n',
         type: 'confirm'
@@ -253,7 +269,7 @@ const questions = [
         validate: requireInput,
     }
     ,
-    {   //Resources.  Yes or No
+    {   //Resources.  Yes or No                             Find a way to separate resources like credits.
         name: 'queryResources',
         message: 'Are there any resources you would like to add to your project?\n',
         type: 'confirm'
@@ -274,11 +290,26 @@ const questions = [
         validate: requireInput, 
     }
     ,
-    {   //License.  When 'none' selected. it does go into the questions array but... it's ignored.
+    {   //License.                                  Add more licenses.  Generate license with user information on it.
         name: 'License',
         message: 'Choose a license.',
         type: 'list',
         choices: ['Unlicensed', 'MIT', 'Apache2.0', 'GPLv3', 'BSD', 'Boost'],
+    }
+    ,
+    { //License. Personal link or Auto link.
+        name: 'LinkLicense',
+        message: 'Add personal link to license or auto link to general info license site',
+        type: 'list',
+        choices: ['Personal link', 'Auto link'],
+    }
+    ,
+    { //License. Add personal link.
+        name: 'personalLicense',
+        when: previousPrompt => previousPrompt.LinkLicense === 'Personal link',
+        message: 'Enter personal license url.\n',
+        type: 'input',
+        validate: requireInput,
     }
 ];
 
@@ -298,7 +329,7 @@ function init() {
     inquirer
     .prompt(questions)
     .then((data) => {   //data = name: input value.
-        writeToFile('kate.md', generateMarkdown(data));   //Change name after video.
+        writeToFile('daniel.md', generateMarkdown(data));   //Change name after video.
     });
 }
 
