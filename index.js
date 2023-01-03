@@ -1,18 +1,17 @@
-// Sorry for the mess.  But I had fun!             And then wish I would've found reactive interface sooner.  Should implement to reduce questions array.
+// Sorry for the mess.  But I had fun!                          Future note: Look into separating questions array with reactive interface rx.js.
 
 // Welcome
 console.log(`\n\x1b[100m\x1b[34mWelcome to yet another README file generator.\x1b[0m\x1b[0m
-    Don't forget this is a markdown file.
-    Meaning it'll recognize input using markup(html) language.
-    May be useful to use with your input.
-    Especially double spaces. &nbsp;&nbsp;\n`);
+    Markdown files use lightweight markup language(LML).
+    In some instances it will recognize HTML.
+    This may be useful to use with your input.
+    Especially with double spaces (&nbsp;&nbsp;) and line breaks<br><br>.\n`);
 
 // Target utilities.
 const inquirer = require('inquirer');
 const fs = require('fs');
 const generateMarkdown = require('./utils/generateMarkdown');
 
-// Dry up validate function.  
 // while no input given, personal alert then question repeats, input 'must' be at least one character to return true.
 const requireInput = (input) => {
     while(input.length === 0){
@@ -24,18 +23,17 @@ const requireInput = (input) => {
 
 
 // Questions Array for prompt to cycle through.
-// Some messages will be skipped depending on confirm input values.
+// Some messages will be skipped depending upon previous prompt values.
 const questions = [
     {
-        //Title Heading.
         name: 'Title',
         message: 'Enter a Title Name for your project.\n',
         type: 'input',
         validate: requireInput,
-        filter: input => input.trim(),
+        filter: input => input.trim(),  //trimming to bold text.
     }
     ,
-    {   //Title Description
+    {
         name: 'Description',
         message: 'Enter a Welcoming Description about your project and why it was developed.\n',
         type: 'input',
@@ -54,7 +52,7 @@ const questions = [
         type: 'confirm'
     }
     ,
-    {   //Getting Started. Yes.
+    {   //Getting Started.
         name: 'gettingStarted',
         message: 'Enter a getting started description about pre-requisites to this installation.\n',
         type: 'input',
@@ -67,7 +65,7 @@ const questions = [
         type: 'confirm'
     }
     ,
-    {   //Installations.  Dependancy name.             This section bothers me but I'm leaving it as it for the moment.
+    {   //Installations.  Dependancy name.
         name: 'Installations',
      // when: the above prompt is value, prompt this message. If no true value, skip to next prompt.
         when: previousPrompt => previousPrompt.queryInstallations === true,
@@ -76,10 +74,10 @@ const questions = [
         validate: requireInput,
     }
     ,
-    {   //Installations.  Fenced code block.  Yes or No
+    {   //Installations.  Fenced code block.  Yes or No                         Add more languages to snippets and find a way to add more snippets without adding more messages to questions.
         name: 'addCode1',
         when: previousPrompt => previousPrompt.queryInstallations === true,
-        message: 'Two fenced code blocks available, lng=shell? They will appear under the installation description.\n',
+        message: 'Two fenced code blocks available.  They will appear as *examples under the installation description.\n',
         type: 'confirm'
     }
     ,
@@ -94,7 +92,7 @@ const questions = [
     {   //Installations. Fenced code block 1.  Yes
         name: 'code1',
         when: previousPrompt => previousPrompt.addCode1 === true,
-        message: 'Enter first block of code.\n',
+        message: 'Enter first block of code.  Example 1.\n',
         type: 'input',
         validate: requireInput,
     }
@@ -109,9 +107,15 @@ const questions = [
     {   //Installations.  Fenced code block 2.  Yes
         name: 'code2',
         when: previousPrompt => previousPrompt.addCode2 === true,
-        message: 'Enter second block of code.\n',
+        message: 'Enter second block of code.  Example 2.\n',
         type: 'input',
         validate: requireInput,
+    }
+    ,
+    {   //Usage. Code block Yes or No
+        name: 'queryUsageCode',
+        message: 'Next is the Usage Section. Will you be needing a code block for your description?\n',
+        type: 'confirm',
     }
     ,
     {   //Usage.
@@ -121,13 +125,21 @@ const questions = [
         validate: requireInput, 
     }
     ,
+    {
+        name: 'UsageCodeBlock',
+        when: previousPrompt => previousPrompt.queryUsageCode === true,
+        message: 'Enter block of code.\n',
+        type: 'input',
+        validate: requireInput,
+    }
+    ,
     {   //Usage.  Add file.  Yes or No
         name: 'queryAddFile',
         message: 'Would you like to add an image or gif to your Usage section?\n',
         type: 'confirm'
     }
     ,
-    {   //Usage. Add file. Personal or Auto.                                            Implement a way to add more than one file.
+    {   //Usage. Add file. Personal or Auto.                        Implement a way to add more than one file.
         name: 'whichSyntaxFile',
         when: previousPrompt => previousPrompt.queryAddFile === true,
         message: 'Select Option for add an image file:',
@@ -143,7 +155,7 @@ const questions = [
         validate: requireInput,
     }
     ,
-    {   //Usage. Add file. Auto.  Description                                       Find a way to repeat these two next questions consecutively. example: Enter file location 1. Enter description 1 ; Enter file location 2. Enter description 2.  ETC.
+    {   //Usage. Add file. Auto.  Description                        Find a way to repeat these two next questions consecutively. example: Enter file location 1. Enter description 1 ; Enter file location 2. Enter description 2.  ETC.
         name: 'descriptionOfFile',
         when: previousPrompt => previousPrompt.whichSyntaxFile === 'Use generator for auto syntax.',
         message: 'Enter a short description of the file.\n',
@@ -223,7 +235,7 @@ const questions = [
         type: 'input',
         validate: requireInput,
     }
-    ,                                       // ATM separte by making array using semicolon.  Then separate out each person and link to separate arrays.  function array indeces at the same time inside arrays value is [person] &+ (link)
+    ,                                       
     {   //Credits.  Yes or No                                       Find a way to separate name from social link to create a clickable link of name.
         name: 'queryCredits',
         message: 'Are there any other persons to acknowledge for this project?\n',
@@ -269,7 +281,7 @@ const questions = [
         validate: requireInput,
     }
     ,
-    {   //Resources.  Yes or No                             Find a way to separate resources like credits.
+    {   //Resources.  Yes or No                          Find a way to separate resources like credits.
         name: 'queryResources',
         message: 'Are there any resources you would like to add to your project?\n',
         type: 'confirm'
@@ -290,7 +302,7 @@ const questions = [
         validate: requireInput, 
     }
     ,
-    {   //License.                                  Add more licenses.  Generate license with user information on it.
+    {   //License.              If you don't want a license you may as well choose unlicensed.      Future note: Add more licenses.  Generate license with user information on it.
         name: 'License',
         message: 'Choose a license.',
         type: 'list',
@@ -313,10 +325,7 @@ const questions = [
     }
 ];
 
-
-
-
-// Function to write README file.  Future possibly implement generate License markdown file through generator.
+// Function to write README file.                    Future possibly implement generate License markdown file through generator.
 function writeToFile(README, data) {
     fs.writeFile(README, data, (err) =>{
         err ? console.error(err) : console.log('\n\x1b[32mSUCCESS!\x1b[0m\n    README document generated.\n    You may now view your new file.\n');
@@ -337,15 +346,4 @@ function init() {
 init();
 
 
-// User will need to install inquirer package.
-// [Inquirer package](https://www.npmjs.com/package/inquirer/v/8.2.4). 
-// Node,js pre-requisite
-//npm init -y
-//npm i inquirer@8.2.4
-//invoke using node index.js
-
-// Because this application won’t be deployed, you’ll also need to provide a link to a walkthrough video 
-// that demonstrates its functionality. 
-// Revisit the Screencastify Tutorial in the prework as a refresher on 
-// how to record video from your computer. 
-// You’ll need to submit a link to the video _and_ add it to the README of your project.
+/*  zMag33z  */

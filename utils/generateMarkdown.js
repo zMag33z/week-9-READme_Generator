@@ -1,4 +1,4 @@
-// File required by index.js.
+// Need to create new file renderSections.js for renderfunctions.
 
 // Rendering Installation section.
 function renderInstallationsSection(data){
@@ -38,6 +38,13 @@ function renderUsageSection(data){
 ${data.Usage}
 \n`;
 
+  if(data.queryUsageCode === true){
+    let example = `*Example:*\n`;
+    let tripleTicks = '```';
+    let usageCode = example + tripleTicks + `shell\n${data.UsageCodeBlock}\n` + tripleTicks + '\n';
+    usageSection += usageCode;
+  }
+
   //Add file.  User syntax
   if(data.whichSyntaxFile === 'Apply personal syntax to file.'){
     let personalFile = `${data.userSyntaxFile}\n\n`;
@@ -52,39 +59,41 @@ ${data.Usage}
     }
     usageSection += autoFile;
   }
+
+
   return usageSection;
 }
 
 // Rendering Credits section.
 function renderCredits(data){
-  let trythis = data.Credits.split(';');
-  console.log(trythis);
-  console.log(trythis[0]);
+  // let trythis = data.Credits.split(';');
+  // console.log(trythis);
+  // console.log(trythis[0]);
 
 
   let togetherOrNo;
 
 // lol Couldn't think what to call it. Must be some debt to collect out there.
   let creditors = `
-## Credits:
+## Acknowledgements:
   
-**_Project Creators:_**
+-**_Project Creators:_**
 
-A quick shout out to those who helped bring this project together.
+A huge **Thanks** to those who worked hard to bring this project together.
 
 ${data.Credits}
 \n`;
 
   let addContributesFile = `
-**_Contributors:_**
+-**_Contributors:_**
 
 [View Contributors Here](${data.addContributorsFile})
 \n`;
 
   let contributors = `
-**_Contributors:_**
+-**_Contributors:_**
 
-Would also like to thank all contributors at this time.&nbsp;&nbsp;All of the input is and was greatly appreciated and this project would not be as far as it is without it.
+Would also like to **Thank** all contributors at this time.&nbsp;&nbsp;All of the input was and will always be *greatly appreciated* and this project would not be what it is without it.
 
 &nbsp;&nbsp;Again.  Thank you.
 
@@ -188,15 +197,18 @@ See *Terms & Conditions* of the license ${clickHere}(${renderLicenseLink(data)})
 
 // Beginning generateMarkdown function.  Generate Document with imported data.
 function generateMarkdown(data) {
-  // compiled = only sections without ifs are mandatory, and if trues (user selected), go inside this array. if false ignore.
+
+console.log(data);
+
+  // compiled = only sections that are mandatory or true.
   let compiled =[];
-  data.Description += '<br><br>';   //space between description and following content.
+  data.Description += '<br><br>';
 
   // Title and Description: mandatory
   let titleNdescription = `# **${data.Title}**\n\n### ${data.Description}\n\n`;
   compiled.push(titleNdescription);
 
-  // Tables of Contents.  As it cycles through, content sections are added if user selected yes for section.
+  // Tables of Contents.  Will cycle through collecting sections.
   let contents = `### **Table of contents:**\n\n`;
 
   // Getting Started: Add?
@@ -215,7 +227,7 @@ function generateMarkdown(data) {
     contents += contentInstallations;
   }
 
-  // Usage: mandatory
+  // Usage:
   let usage = renderUsageSection(data);
   let contentUsage = `- [Usage](#usage)\n`;
   compiled.push(usage);
@@ -248,7 +260,7 @@ function generateMarkdown(data) {
   // Credits: add?
   if(data.queryCredits === true){
     let credits = renderCredits(data);
-    let contentCredits = `- [Credits](#credits)\n`;
+    let contentCredits = `- [Acknowledgements:](#acknowledgements)\n`;
     compiled.push(credits);
     contents += contentCredits;
   }
@@ -261,30 +273,29 @@ function generateMarkdown(data) {
     contents += contentResources;
   }
 
-  // Location: mandatory 
+  // Location:
   let location = `## Location:\n\n[${data.Title}](${data.Location})\n`;
   let contentLocation = `- [Location](#location)\n`;
   compiled.push(location);
   contents += contentLocation;
 
-  // License: mandatory.  Choose unlicense and view to understand implications of having no license.
+  // License:
   let license = renderLicenseSection(data);
   let contentLicense = `- [License](#license)\n\n`;
   compiled.push(license);
   contents += contentLicense;
 
   // Tables of Contents: add?
-  // down here so 'contents' updates throughout ifs. 
-  // It is then spliced to contents array to index 1.  Title and Description are in index 0.
-  if(data.Contents === true){
+  if(data.Contents === true){ //contents now cycled. Push button, splice contents.
     let backToTop = `\n#### [**Back to top**](#)`;
     compiled.push(backToTop);
     compiled.splice(1, 0, contents);
   }
 
-   return compiled.join(''); // join- here it turns each index into a string then joins them together.
+   return compiled.join(''); // join('')turns compiled into a string of strings.
 }
-
 // End of generateMarkdown function.
-// Return to writeToFile.
+
 module.exports = generateMarkdown;
+
+/*  zMaG33  */
