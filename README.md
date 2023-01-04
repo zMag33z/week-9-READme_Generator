@@ -20,13 +20,11 @@
 
 -----
 ## Getting Started:
------
 
 ![npm version](https://img.shields.io/badge/node-v18.12.1-9cf)<br>First to get started you will need to have downloaded Node.js.  If you haven't, you may go here.&nbsp;&nbsp;[*Node.js downloads*](https://nodejs.org/en/download/)
 
 -----
 ## Installations:
------  
 
 ![npm version](https://img.shields.io/badge/inquirer-v8.2.4-9cf)<br>inquirer&nbsp;&nbsp;[*for more information*](https://www.npmjs.com/package/inquirer)
   
@@ -44,7 +42,6 @@ npm i inquirer@8.2.4
 
 -----
 ## Usage:
------
 
 Once the above installations are complete, to initalize the application, on the command line type the *example* provided below.&nbsp;&nbsp;In the beginning there will be a log that states the languages a markdown file recognizes and how it may be useful to use with your input.&nbsp;&nbsp;Then you'll be guided through a series of prompts that will generate a README file containing *mostly* the criteria you would like to add to your file.
 
@@ -57,19 +54,16 @@ node.js index.js
 
 -----
 ## Contributions:
------
 
 Contributions not available at this time...
 
 -----
 ## Tests:
------
 
 There will always be tests to run...
 
 -----
 ## Questions:
------
 
 For any questions or additional feedback.
 
@@ -79,7 +73,6 @@ Email:&nbsp;&nbsp;[zMaG33z](zMag33z@gmail.com)
 
 -----
 ## Acknowledgements:
------
     
 **_-Project Creators:_**
   
@@ -98,19 +91,16 @@ No acknowledgements at this time.&nbsp;&nbsp;Only showcasing this section.
 
 -----
 ## Resources:
------
 
 [node.js](https://nodejs.org/en/docs/)<br>[inquirer](https://www.npmjs.com/package/inquirer?activeTab=readme)<br>[Google](https://www.google.com)<br><br>**_Original Source Code:_**&nbsp;&nbsp;[provided by UTexas.edu](https://techbootcamps.utexas.edu/coding/)
 
 -----
 ## Location:
------
 
 [README.md Generator using Node.js with *inquirer*](https://github.com/zMag33z/week-9-READme_Generator)
 
 -----
 ## License:
------
   
 ![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen)
   
