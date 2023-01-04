@@ -86,7 +86,7 @@ No acknowledgements at this time.&nbsp;&nbsp;Only showcasing this section.
 
 ## Location:
 
-[# **README.md Generator using Node.js with *inquirer***](https://github.com/zMag33z/week-9-READme_Generator)
+[**README.md Generator using Node.js with *inquirer***](https://github.com/zMag33z/week-9-READme_Generator)
 
 ## License:
 

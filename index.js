@@ -1,4 +1,4 @@
-// Sorry for the mess.  But I had fun!                          Future note: Look into separating questions array with reactive interface rx.js.
+// Sorry for the mess.  But I had fun!                          Future note: Look into separating questions array with reactive interface.
 
 // Welcome
 console.log(`\n\x1b[100m\x1b[34mWelcome to yet another README file generator.\x1b[0m\x1b[0m
@@ -139,7 +139,7 @@ const questions = [
         type: 'confirm'
     }
     ,
-    {   //Usage. Add file. Personal or Auto.                        Implement a way to add more than one file.
+    {   //Usage. Add file. Personal or Auto.                       Implement a way to add more than one file.       Also create an object to create links and images with input data.
         name: 'whichSyntaxFile',
         when: previousPrompt => previousPrompt.queryAddFile === true,
         message: 'Select Option for add an image file:',
@@ -338,7 +338,7 @@ function init() {
     inquirer
     .prompt(questions)
     .then((data) => {   //data = name: input value.
-        writeToFile('daniel.md', generateMarkdown(data));   //Change name after video.
+        writeToFile('daniel.md', generateMarkdown(data));
     });
 }
 
