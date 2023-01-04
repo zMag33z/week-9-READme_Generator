@@ -92,7 +92,7 @@ const questions = [
     {   //Installations. Fenced code block 1.  Yes
         name: 'code1',
         when: previousPrompt => previousPrompt.addCode1 === true,
-        message: 'Enter first block of code.  Example 1.\n',
+        message: 'Enter block of code.  Example 1.\n',
         type: 'input',
         validate: requireInput,
     }
@@ -107,7 +107,7 @@ const questions = [
     {   //Installations.  Fenced code block 2.  Yes
         name: 'code2',
         when: previousPrompt => previousPrompt.addCode2 === true,
-        message: 'Enter second block of code.  Example 2.\n',
+        message: 'Enter block of code.  Example 2.\n',
         type: 'input',
         validate: requireInput,
     }
@@ -338,7 +338,7 @@ function init() {
     inquirer
     .prompt(questions)
     .then((data) => {   //data = name: input value.
-        writeToFile('daniel.md', generateMarkdown(data));
+        writeToFile('README.md', generateMarkdown(data));
     });
 }
 

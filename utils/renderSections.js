@@ -30,26 +30,33 @@ ${data.howToInstall}
 
 function usage(data){  
     let usageSection = `
-  ## Usage:
+## Usage:
   
-  ${data.Usage}
-  \n`;
+${data.Usage}
+\n`;
 
-    //Add file.  User syntax
-    if(data.whichSyntaxFile === 'Apply personal syntax to file.'){
-      let personalFile = `${data.userSyntaxFile}\n\n`;
-      usageSection += personalFile;
-    }  
-    //Add file. Auto syntax
-    if(data.whichSyntaxFile === 'Use generator for auto syntax.'){
-      let autoFile = `![${data.descriptionOfFile}](${data.locationOfFile})\n\n`;
-      if(data.queryAddLabel === true){
-        autoFile += `${data.AddLabel}\n\n`;
-      }
-      usageSection += autoFile;
+  let tripleTicks = '```';
+
+  if(data.queryUsageCode === true){
+    let example = `*Example:*\n`;
+    let usageCode = example + tripleTicks + `shell\n${data.UsageCodeBlock}\n` + tripleTicks + '\n\n';
+    usageSection += usageCode;
+  } 
+  //Add file.  User syntax
+  if(data.whichSyntaxFile === 'Apply personal syntax to file.'){
+    let personalFile = `${data.userSyntaxFile}\n\n`;
+    usageSection += personalFile;
+  }  
+  //Add file. Auto syntax
+  if(data.whichSyntaxFile === 'Use generator for auto syntax.'){
+    let autoFile = `![${data.descriptionOfFile}](${data.locationOfFile})\n\n`;
+    if(data.queryAddLabel === true){
+      autoFile += `${data.AddLabel}\n\n`;
     }
-    return usageSection;
+    usageSection += autoFile;
   }
+  return usageSection;
+}
   
 
 function credits(data){
@@ -62,7 +69,7 @@ function credits(data){
   
 // lol Couldn't think what to call it. Must be some debt to collect out there.
   let creditors = `
-## Credits:
+## Acknowledgements:
     
 **_Project Creators:_**
   
