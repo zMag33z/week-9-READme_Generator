@@ -214,7 +214,7 @@ const questions = [
         validate: requireInput,
     }
     ,
-    {   //Questions.  Yes or No                     Add more contact methods.  Turn into array and place in desired output location.
+    {   //Questions.  Yes or No                     Add more contact methods.
         name: 'queryQuestions',
         message: 'Would you like to provide an email to receive Questions about your project?\n',
         type: 'confirm'
@@ -302,7 +302,7 @@ const questions = [
         validate: requireInput, 
     }
     ,
-    {   //License.              If you don't want a license you may as well choose unlicensed.      Future note: Add more licenses.  Generate license with user information on it.
+    {   //License.              If you don't want a license you may as well choose unlicensed.      Future note: Add more licenses.
         name: 'License',
         message: 'Choose a license.',
         type: 'list',
@@ -338,7 +338,7 @@ function init() {
     inquirer
     .prompt(questions)
     .then((data) => {   //data = name: input value.
-        writeToFile('README.md', generateMarkdown(data));
+        writeToFile('susan.md', generateMarkdown(data));
     });
 }
 

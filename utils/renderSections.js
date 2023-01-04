@@ -71,26 +71,26 @@ function credits(data){
   let creditors = `
 ## Acknowledgements:
     
-**_Project Creators:_**
+**_-Project Creators:_**
   
-A quick shout out to those who helped bring this project together.
+A huge **Thanks** to those who worked hard to bring this project together.
   
 ${data.Credits}
 \n`;
   
   let addContributesFile = `
-**_Contributors:_**
+**_-Contributors:_**
   
 [View Contributors Here](${data.addContributorsFile})
 \n`;
   
   let contributors = `
-**_Contributors:_**
+**_-Contributors:_**
   
-Would also like to thank all contributors at this time.&nbsp;&nbsp;All of the input is and was greatly appreciated and this project would not be as far as it is without it.
-  
+Would also like to **Thank** all contributors at this time.&nbsp;&nbsp;All of the input was and will always be *greatly appreciated* and this project would not be what it is without it.
 &nbsp;&nbsp;Again.  Thank you.
-  
+
+
 ${data.Contributors}
 \n`;
   

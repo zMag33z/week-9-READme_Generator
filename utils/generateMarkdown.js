@@ -57,7 +57,7 @@ console.log(data);
 
   // Questions: add?
   if(data.queryQuestions === true){
-    let questionsSection = `## Questions:\n\nFor any questions or additional feedback.\n\n**_Contact Information:_**\n\nEmail:&nbsp;&nbsp;[${data.UserName}](${data.questionsEmail})\n`;
+    let questionsSection = `## Questions:\n\nFor any questions or additional feedback.\n\n**_-Contact Information:_**\n\nEmail:&nbsp;&nbsp;[${data.UserName}](${data.questionsEmail})\n`;
     let contentQuestions = `- [Questions](#questions)\n`;
     compiled.push(questionsSection);
     contents += contentQuestions;
