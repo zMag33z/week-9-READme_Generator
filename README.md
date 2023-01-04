@@ -45,7 +45,7 @@ Once the above installations are complete, to initalize the application, on the 
 node.js index.js
 ```
 
-***Lightweight markup language and HTML use for best output.***<br>![syntaxinput](./imgs/entersyntax.png)<br><br><br>***All Sections added image example.***<br>![allsectionsexample](./imgs/allsectionsaddedex.gif)<br><br><br>***Least amount of sections added image example.***<br>![mandatorysectionsonly](./imgs/mandatorysectionsex.png)<br>
+***LML and HTML use for best output.***<br>![syntaxinput](./imgs/entersyntax.png)<br><br><br>***All Sections added image example.***<br>![allsectionsexample](./imgs/allsectionsaddedex.gif)<br><br><br>***Least amount of sections added image example.***<br>![mandatorysectionsonly](./imgs/mandatorysectionsex.png)<br>
 
 ## Contributions:
 
