@@ -338,7 +338,7 @@ function init() {
     inquirer
     .prompt(questions)
     .then((data) => {   //data = name: input value.
-        writeToFile('susan.md', generateMarkdown(data));
+        writeToFile('README.md', generateMarkdown(data));
     });
 }
 
