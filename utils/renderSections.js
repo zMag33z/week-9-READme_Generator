@@ -1,6 +1,5 @@
 // required by generateMarkdown file.
 
-
 function installations(data){
   let installationsSection = `
 ## Installations:
@@ -29,168 +28,151 @@ ${data.howToInstall}
   
 
 function usage(data){  
-    let usageSection = `
+  let usageSection = `
 ## Usage:
   
 ${data.Usage}
 \n`;
 
-  let tripleTicks = '```';
-
   if(data.queryUsageCode === true){
+    let tripleTicks = '```';
     let example = `*Example:*\n`;
     let usageCode = example + tripleTicks + `shell\n${data.UsageCodeBlock}\n` + tripleTicks + '\n\n';
     usageSection += usageCode;
   } 
-  //Add file.  User syntax
+
   if(data.whichSyntaxFile === 'Apply personal syntax to file.'){
     let personalFile = `${data.userSyntaxFile}\n\n`;
     usageSection += personalFile;
   }  
-  //Add file. Auto syntax
+
   if(data.whichSyntaxFile === 'Use generator for auto syntax.'){
     let autoFile = `![${data.descriptionOfFile}](${data.locationOfFile})\n\n`;
-    if(data.queryAddLabel === true){
-      autoFile += `${data.AddLabel}\n\n`;
-    }
+
+    if(data.queryAddLabel === true) autoFile += `${data.AddLabel}\n\n`;
+
     usageSection += autoFile;
   }
-  return usageSection;
+return usageSection;
 }
   
 
-function credits(data){
-  // let trythis = data.Credits.split(';');
+function acknowledgements(data){
+  // let trythis = data.Credits.split(';');   Leaving this for future use *idea.  May have to implement idea in index with filter:.  Also future boil this function down into another function.
   // console.log(trythis);
   // console.log(trythis[0]);
+
+  let acknowledgementType = data.CreditsANDORContributors;
+  let contributorsFileOrInput = data.contributorAddFile;
   
-  
-  let togetherOrNo;
-  
-// lol Couldn't think what to call it. Must be some debt to collect out there.
-  let creditors = `
-## Acknowledgements:
-    
+
+  let acknowledgements = `## Acknowledgements:
+\n`;
+
+  let teamMembers = ` 
 **_-Project Creators:_**
   
 A huge **Thanks** to those who worked hard to bring this project together.
   
 ${data.Credits}
 \n`;
-  
-  let addContributesFile = `
-**_-Contributors:_**
-  
-[View Contributors Here](${data.addContributorsFile})
-\n`;
-  
+
   let contributors = `
 **_-Contributors:_**
-  
-Would also like to **Thank** all contributors at this time.&nbsp;&nbsp;All of the input was and will always be *greatly appreciated* and this project would not be what it is without it.
-&nbsp;&nbsp;Again.  Thank you.
+\n`;
 
-
-${data.Contributors}
+  let addContributesFile = `View Contributors [*here*](${data.addContributorsFile}).
 \n`;
   
-  //Check the value of prompt input.
-  if(data.CreditsANDORContributors === 'Team Members'){
-      togetherOrNo = creditors;
-  }
-  if(data.contributorAddFile === 'Add File'){
-      togetherOrNo = addContributesFile;
-  }
-  if(data.CreditsANDORContributors === 'Contributors'){
-      togetherOrNo = contributors;
-  }
-  if(data.CreditsANDORContributors === 'BOTH' && data.contributorAddFile === 'Input Each'){
-      togetherOrNo = creditors + contributors;
-  }
-  if(data.CreditsANDORContributors === 'BOTH' && data.contributorAddFile === 'Add File'){
-      togetherOrNo = creditors + addContributesFile;
-  }
+  let contributeMessage = `Would like to **Thank** all contributors at this time.&nbsp;&nbsp;All of the input was and will always be *greatly appreciated* and this project would not be what it is without it.
+&nbsp;&nbsp;Again.  Thank you.
+\n`;
+
+  let contributeMessageWithTeam = contributeMessage.replace('Would', 'Would also');
+
+  let inputEachContributor = `${data.Contributors}
+\n`;
+
+  let acknowledgementsSection;
+  if(acknowledgementType === 'Team Members') acknowledgementsSection = acknowledgements + teamMembers;
+
+  if(acknowledgementType === 'Contributors') acknowledgementsSection = acknowledgements + contributors + contributeMessage + inputEachContributor;
+
+  if(contributorsFileOrInput === 'Add File') acknowledgementsSection = acknowledgements + contributors + contributeMessage + addContributesFile;
+
+  if(acknowledgementType === 'BOTH' && contributorsFileOrInput === 'Input Each') acknowledgementsSection = acknowledgements + teamMembers + contributors + contributeMessageWithTeam + inputEachContributor;
+
+  if(acknowledgementType === 'BOTH' && contributorsFileOrInput === 'Add File') acknowledgementsSection = acknowledgements + teamMembers + contributors + contributeMessageWithTeam + addContributesFile;
   
-  return togetherOrNo;
+  return acknowledgementsSection;
 }
   
-// Render license badge.
-function renderLicenseBadge(data) {
-  let badge;
-  
-  //checks the value of prompt input.
-  if(data.License === 'Unlicensed'){
-      badge = `https://img.shields.io/badge/license-unlicensed-lightgrey`;
-  }
-  if(data.License === 'MIT'){
-      badge = `https://img.shields.io/badge/license-MIT-brightgreen`;
-  }
-  if(data.License === 'Apache2.0'){
-      badge = `https://img.shields.io/badge/license-Apache2.0-yellow`;
-  }
-  if(data.License === 'GPLv3'){
-      badge = `https://img.shields.io/badge/license-GPLv3-blue`;
-  }
-  if(data.License === 'BSD'){
-      badge = `https://img.shields.io/badge/license-BSD_3--Clause-orange`;
-  }
-  if(data.License === 'Boost'){
-      badge = `https://img.shields.io/badge/license-Boost_1.0-lightblue`;
-  }
-return badge;
+
+function getLicenseBadge(data) {
+  let licenseChoice = data.License;
+
+  let badge;  
+  if(licenseChoice === 'Unlicensed') badge = `https://img.shields.io/badge/license-unlicensed-lightgrey`;
+
+  if(licenseChoice === 'MIT') badge = `https://img.shields.io/badge/license-MIT-brightgreen`;
+
+  if(licenseChoice === 'Apache2.0') badge = `https://img.shields.io/badge/license-Apache2.0-yellow`;
+
+  if(licenseChoice === 'GPLv3') badge = `https://img.shields.io/badge/license-GPLv3-blue`;
+
+  if(licenseChoice === 'BSD') badge = `https://img.shields.io/badge/license-BSD_3--Clause-orange`;
+
+  if(licenseChoice === 'Boost') badge = `https://img.shields.io/badge/license-Boost_1.0-lightblue`;
+
+  return badge;
 }
   
-// Render license link.
-function renderLicenseLink(data) {
+
+function getLicenseLink(data) {
+  let licenseLinkInputType = data.LinkLicense;
+  let licenseChoice = data.License;
+
   let link;
+  if(licenseLinkInputType === 'Personal link') link = data.personalLicense;  
   
-  //checks value of prompt input
-  if(data.LinkLicense === 'Personal link'){
-    link = data.personalLicense;
-  }
-  
-  if(data.LinkLicense === 'Auto link'){  
-    if(data.License === 'Unlicensed'){
-      link = `https://opensource.org/licenses/unlicense`;
-    }
-    if(data.License === 'MIT'){
-      link = `https://opensource.org/licenses/MIT`;
-    }
-    if(data.License === 'Apache2.0'){
-        link = `https://www.apache.org/licenses/LICENSE-2.0`;
-    }
-    if(data.License === 'GPLv3'){
-      link = `https://www.gnu.org/licenses/gpl-3.0.en.html`;
-    }
-    if(data.License === 'BSD'){
-      link = `https://opensource.org/licenses/BSD-3-Clause`;
-    }
-    if(data.License === 'Boost'){
-      link = clickHere + `https://www.boost.org/LICENSE_1_0.txt`;
-    }
+  if(licenseLinkInputType === 'Auto link'){
+
+    if(licenseChoice === 'Unlicensed') link = `https://opensource.org/licenses/unlicense`;
+    
+    if(licenseChoice === 'MIT') link = `https://opensource.org/licenses/MIT`;
+    
+    if(licenseChoice === 'Apache2.0') link = `https://www.apache.org/licenses/LICENSE-2.0`;
+    
+    if(licenseChoice === 'GPLv3') link = `https://www.gnu.org/licenses/gpl-3.0.en.html`;
+    
+    if(licenseChoice === 'BSD') link = `https://opensource.org/licenses/BSD-3-Clause`;
+    
+    if(licenseChoice === 'Boost') link = `https://www.boost.org/LICENSE_1_0.txt`;    
   }  
-return link;
+  return link;
 }
   
-// Render license section.  Badge and link render sent out to the two above functions.  Then returned.
+// Render license section.  Get badge and link sent out to the two above functions.  Then returned.
 function license(data){
-  let clickHere = '[***here***]';
-  let endREADME = '<br><br>';
-  let section = `
+
+let licenseSection = `
 ## License:
   
-![License: ${data.License}](${renderLicenseBadge(data)})
+![License: ${data.License}](${getLicenseBadge(data)})
   
-See *Terms & Conditions* of the license ${clickHere}(${renderLicenseLink(data)}).
-`;
-return section + endREADME;
+See *Terms & Conditions* of the license [***here***](${getLicenseLink(data)}).
+
+<br>
+
+`;    // DO NOT CHANGE.. Looks like error but is not error.  Spacing for <br>.  Interferes with back to top button syntax when button added.
+return licenseSection;
 }
 
-// Export to required -- generateMarkdown
+// Export to required -- generateMarkdown ONLY when function called.
 module.exports = {
   installations: installations,
   usage: usage,
-  credits: credits,
+  acknowledgements: acknowledgements,
   license: license
 }
 

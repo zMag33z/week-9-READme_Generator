@@ -65,7 +65,7 @@ console.log(data);
 
   // Credits: add?
   if(data.queryCredits === true){
-    let creditsSection = renderSection.credits(data);
+    let creditsSection = renderSection.acknowledgements(data);
     let contentCredits = `- [Acknowledgements:](#acknowledgements)\n`;
     compiled.push(creditsSection);
     contents += contentCredits;
