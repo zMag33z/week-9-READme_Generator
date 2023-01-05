@@ -54,6 +54,8 @@ const questions = [
     ,
     {   //Getting Started.
         name: 'gettingStarted',
+     // when: the above prompt is value, prompt this message. If no true value, skip to next prompt
+        when: previousPrompt => previousPrompt.queryGettingStarted === true,
         message: 'Enter a getting started description about pre-requisites to this installation.\n',
         type: 'input',
         validate: requireInput,
@@ -67,7 +69,6 @@ const questions = [
     ,
     {   //Installations.  Dependancy name.
         name: 'Installations',
-     // when: the above prompt is value, prompt this message. If no true value, skip to next prompt.
         when: previousPrompt => previousPrompt.queryInstallations === true,
         message: 'Enter Installation/Dependancy name.\n',
         type: 'input',
