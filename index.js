@@ -236,6 +236,21 @@ const questions = [
         type: 'input',
         validate: requireInput,
     }
+    ,
+    {
+        name: 'queryGithub',
+        when: previousPrompt => previousPrompt.queryQuestions === true,
+        message: 'Would you like to add your GitHub profile?\n',
+        type: 'confirm'
+    }
+    ,
+    {
+        name: 'questionsGitHub',
+        when: previousPrompt => previousPrompt.queryGithub === true,
+        message: 'Enter your GitHub user name. (\x1b[33mcase sensitive\x1b[0m)\n',
+        type: 'input',
+        validate: requireInput,
+    }
     ,                                       
     {   //Credits.  Yes or No                                       Find a way to separate name from social link to create a clickable link of name.
         name: 'queryCredits',
@@ -339,7 +354,7 @@ function init() {
     inquirer
     .prompt(questions)
     .then((data) => {   //data = name: input value.
-        writeToFile('README.md', generateMarkdown(data));
+        writeToFile('kate.md', generateMarkdown(data));
     });
 }
 

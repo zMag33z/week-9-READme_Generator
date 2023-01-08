@@ -56,6 +56,19 @@ ${data.Usage}
 return usageSection;
 }
   
+function questions(data){
+  let questions = `## Questions:
+For any questions or additional feedback.
+
+**_-Contact Information:_**
+
+Email:&nbsp;&nbsp;[${data.UserName}](${data.questionsEmail})
+
+[GitHub Profile *here*](https://github.com/${data.questionsGitHub})
+\n`;
+
+  return questions;
+}
 
 function acknowledgements(data){
   // let trythis = data.Credits.split(';');   Leaving this for future use *idea.  May have to implement idea in index with filter:.  Also future boil this function down into another function.
@@ -172,6 +185,7 @@ return licenseSection;
 module.exports = {
   installations: installations,
   usage: usage,
+  questions: questions,
   acknowledgements: acknowledgements,
   license: license
 }
