@@ -42,10 +42,12 @@ Once the above installations are complete, to initalize the application, on the 
 
 *Example:*
 ```shell
-node.js index.js
+node index.js
 ```
 
 ***LML and HTML use for best output.***<br>![syntaxinput](./imgs/entersyntax.png)<br><br><br>***All Sections added image example.***<br>![allsectionsexample](./imgs/allsectionsaddedex.gif)<br><br><br>***Least amount of sections added image example.***<br>![mandatorysectionsonly](./imgs/mandatorysectionsex.png)<br>
+
+**Walkthrough video [*click here*.](https://drive.google.com/file/d/1zDNMnn-b5LPb8CfUm1-kMUUzLuGB4Bxr/view)**
 
 ## Contributions:
 

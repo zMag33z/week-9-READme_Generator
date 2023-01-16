@@ -76,7 +76,7 @@ const questions = [
     }
     ,
     {   //Installations.  Fenced code block.  Yes or No                         Add more languages to snippets and find a way to add more snippets without adding more messages to questions.
-        name: 'addCode1',
+        name: 'addCode1',                            // try to validate with while until previous number input met and prompt for new link take in that value from filter add it to new variable then input to string to clear and it'll prompt again.
         when: previousPrompt => previousPrompt.queryInstallations === true,
         message: 'Two fenced code blocks available.  They will appear as *examples under the installation description.\n',
         type: 'confirm'
@@ -354,7 +354,7 @@ function init() {
     inquirer
     .prompt(questions)
     .then((data) => {   //data = name: input value.
-        writeToFile('kate.md', generateMarkdown(data));
+        writeToFile('doNotCopyOverCurrent.md', generateMarkdown(data));
     });
 }
 

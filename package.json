@@ -1,23 +1,23 @@
 {
-  "name": "static-site",
+  "name": "week-9-readme_generator",
   "version": "1.0.0",
-  "description": "An application that generates a READme file depending on user input.",
+  "description": "[![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com)<br> # **README.md Generator using Node.js with *inquirer***",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "inquirer": "^8.2.4"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zMag33z/week-9-READme_Generator.git"
   },
   "keywords": [],
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/zMag33z/week-9-READme_Generator/issues"
   },
-  "homepage": "https://github.com/zMag33z/week-9-READme_Generator#readme"
+  "homepage": "https://github.com/zMag33z/week-9-READme_Generator#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  }
 }
